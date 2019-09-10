@@ -1,4 +1,4 @@
-# sluglisp
+# slugclojure
 
 Web based index of Quicklisp projects
 
@@ -10,13 +10,13 @@ checkboxes next to the package names.
 
 ## Usage
 
-Visit the live demo at http://sluglisp.ahungry.com for now.
+Visit the live demo at http://slugclojure.ahungry.com for now.
 
 When the project is complete, plan to load via a simple:
 
 ```lisp
-(ql:quickload :sluglisp)
-(sluglisp:start :port 5000)
+(ql:quickload :slugclojure)
+(slugclojure:start :port 5000)
 ```
 
 And then visit:
@@ -31,7 +31,7 @@ project to learn more about it.
 For now if you want to toy with the files, clone the repo:
 
 ```sh
-git clone 'https://github.com/ahungry/sluglisp.git'
+git clone 'https://github.com/ahungry/slugclojure.git'
 ```
 
 ## Author

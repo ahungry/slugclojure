@@ -1,7 +1,7 @@
 (in-package :cl-user)
-(defpackage sluglisp.model
+(defpackage slugclojure.model
   (:use :cl :split-sequence :glyphs :drakma :cl-json :cl-ppcre)
-  (:import-from :sluglisp.config
+  (:import-from :slugclojure.config
                 :config)
   (:export
    :list-packages
@@ -11,7 +11,7 @@
    :package-stars
    :package-search
    :package-names))
-(in-package :sluglisp.model)
+(in-package :slugclojure.model)
 
 (in-readtable glyphs:syntax)
 
@@ -24,10 +24,14 @@
   (defparameter *project-readme* (make-hash-table :test #'equal))
   (defparameter *project-stars* (make-hash-table :test #'equal)))
 
+(defun hw ()
+  "Hello world"
+  "haha")
+
 (defun read-and-cache-projects ()
   "get the list of packages"
   (setf *loaded-projects-p* t)
-  (with-open-file (s "~/src/lisp/sluglisp/projects.txt")
+  (with-open-file (s "~/src/lisp/slugclojure/projects.txt")
     (loop for line = (read-line s nil 'eof)
        until (eq 'eof line)
        do (let ((split (split-sequence #\Space line)))
@@ -100,7 +104,7 @@ cl-json."
 
 (defun cache-load (name type)
   "Load up a previously cached file"
-  (let ((file-name (format nil "~~/src/lisp/sluglisp/cache/~a/~a" type name)))
+  (let ((file-name (format nil "~~/src/lisp/slugclojure/cache/~a/~a" type name)))
     (when (probe-file file-name)
       (format nil "~{~a~^~%~}"
               (with-open-file (s file-name)
@@ -110,7 +114,7 @@ cl-json."
 
 (defun cache-save (name type content)
   "Save the readme contents into a file in the repository"
-  (let ((file-name (format nil "~~/src/lisp/sluglisp/cache/~a/~a" type name)))
+  (let ((file-name (format nil "~~/src/lisp/slugclojure/cache/~a/~a" type name)))
     (with-open-file (s file-name :direction :output
                        :if-exists :supersede
                        :if-does-not-exist :create)

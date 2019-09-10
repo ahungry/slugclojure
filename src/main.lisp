@@ -1,16 +1,16 @@
 (in-package :cl-user)
-(defpackage sluglisp
+(defpackage slugclojure
   (:use :cl)
-  (:import-from :sluglisp.config
+  (:import-from :slugclojure.config
                 :config)
   (:import-from :clack
                 :clackup)
   (:export :start
            :stop))
-(in-package :sluglisp)
+(in-package :slugclojure)
 
 (defvar *appfile-path*
-  (asdf:system-relative-pathname :sluglisp #P"app.lisp"))
+  (asdf:system-relative-pathname :slugclojure #P"app.lisp"))
 
 (defvar *handler* nil)
 

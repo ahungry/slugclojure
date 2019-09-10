@@ -1,9 +1,9 @@
 (in-package :cl-user)
-(defpackage sluglisp-asd
+(defpackage slugclojure-asd
   (:use :cl :asdf))
-(in-package :sluglisp-asd)
+(in-package :slugclojure-asd)
 
-(defsystem sluglisp
+(defsystem slugclojure
   :version "0.1"
   :author "Matthew Carter"
   :license "AGPLv3"
@@ -39,4 +39,4 @@
                  (:file "db" :depends-on ("config"))
                  (:file "config"))))
   :description "Web based index of Quicklisp projects"
-  :in-order-to ((test-op (load-op sluglisp-test))))
+  :in-order-to ((test-op (load-op slugclojure-test))))

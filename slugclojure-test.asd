@@ -1,14 +1,14 @@
 (in-package :cl-user)
-(defpackage sluglisp-test-asd
+(defpackage slugclojure-test-asd
   (:use :cl :asdf))
-(in-package :sluglisp-test-asd)
+(in-package :slugclojure-test-asd)
 
-(defsystem sluglisp-test
+(defsystem slugclojure-test
   :author "Matthew Carter"
   :license "AGPLv3"
-  :depends-on (:sluglisp
+  :depends-on (:slugclojure
                :prove)
   :components ((:module "t"
                 :components
-                ((:file "sluglisp"))))
+                ((:file "slugclojure"))))
   :perform (load-op :after (op c) (asdf:clear-system c)))

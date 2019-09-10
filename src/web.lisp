@@ -1,15 +1,15 @@
 (in-package :cl-user)
-(defpackage sluglisp.web
+(defpackage slugclojure.web
   (:use :cl
         :caveman2
-        :sluglisp.config
-        :sluglisp.view
-        :sluglisp.model
-        :sluglisp.db
+        :slugclojure.config
+        :slugclojure.view
+        :slugclojure.model
+        :slugclojure.db
         :datafly
         :sxql)
   (:export :*web*))
-(in-package :sluglisp.web)
+(in-package :slugclojure.web)
 
 ;; for @route annotation
 (syntax:use-syntax :annot)

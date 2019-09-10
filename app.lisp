@@ -1,19 +1,19 @@
-(ql:quickload :sluglisp)
+(ql:quickload :slugclojure)
 
-(defpackage sluglisp.app
+(defpackage slugclojure.app
   (:use :cl)
   (:import-from :lack.builder
                 :builder)
   (:import-from :ppcre
                 :scan
                 :regex-replace)
-  (:import-from :sluglisp.web
+  (:import-from :slugclojure.web
                 :*web*)
-  (:import-from :sluglisp.config
+  (:import-from :slugclojure.config
                 :config
                 :productionp
                 :*static-directory*))
-(in-package :sluglisp.app)
+(in-package :slugclojure.app)
 
 (builder
  (:static

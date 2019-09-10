@@ -1,7 +1,7 @@
 (in-package :cl-user)
-(defpackage sluglisp.db
+(defpackage slugclojure.db
   (:use :cl)
-  (:import-from :sluglisp.config
+  (:import-from :slugclojure.config
                 :config)
   (:import-from :datafly
                 :*connection*
@@ -9,7 +9,7 @@
   (:export :connection-settings
            :db
            :with-connection))
-(in-package :sluglisp.db)
+(in-package :slugclojure.db)
 
 (defun connection-settings (&optional (db :maindb))
   (cdr (assoc db (config :databases))))

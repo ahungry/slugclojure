@@ -1,7 +1,7 @@
 (in-package :cl-user)
-(defpackage sluglisp.view
+(defpackage slugclojure.view
   (:use :cl)
-  (:import-from :sluglisp.config
+  (:import-from :slugclojure.config
                 :*template-directory*)
   (:import-from :caveman2
                 :*response*
@@ -15,7 +15,7 @@
                 :encode-json)
   (:export :render
            :render-json))
-(in-package :sluglisp.view)
+(in-package :slugclojure.view)
 
 (djula:add-template-directory *template-directory*)
 
@@ -38,9 +38,9 @@
 ;;
 ;; Execute package definition
 
-(defpackage sluglisp.djula
+(defpackage slugclojure.djula
   (:use :cl)
-  (:import-from :sluglisp.config
+  (:import-from :slugclojure.config
                 :config
                 :appenv
                 :developmentp
@@ -48,4 +48,4 @@
   (:import-from :caveman2
                 :url-for))
 
-(setf djula:*djula-execute-package* (find-package :sluglisp.djula))
+(setf djula:*djula-execute-package* (find-package :slugclojure.djula))

@@ -1,5 +1,5 @@
 (in-package :cl-user)
-(defpackage sluglisp.config
+(defpackage slugclojure.config
   (:use :cl)
   (:import-from :envy
                 :config-env-var
@@ -11,11 +11,11 @@
            :appenv
            :developmentp
            :productionp))
-(in-package :sluglisp.config)
+(in-package :slugclojure.config)
 
 (setf (config-env-var) "APP_ENV")
 
-(defparameter *application-root*   (asdf:system-source-directory :sluglisp))
+(defparameter *application-root*   (asdf:system-source-directory :slugclojure))
 (defparameter *static-directory*   (merge-pathnames #P"static/" *application-root*))
 (defparameter *template-directory* (merge-pathnames #P"templates/" *application-root*))
 
