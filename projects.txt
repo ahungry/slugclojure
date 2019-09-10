@@ -1,3 +1,8 @@
+ahungry.slugclojure git https://github.com/ahungry/slugclojure.git
+ahungry.ruse git https://github.com/ahungry/ruse.git
+ahungry.insectarium git https://github.com/ahungry/insectarium.git
+ahungry.xdg-rc git https://github.com/ahungry/xdg-rc.git
+ahungry.determinism git https://github.com/ahungry/determinism.git
 8thlight.hyperion git https://github.com/8thlight/hyperion.git
 AeroNotix.swindon git https://github.com/AeroNotix/swindon.git
 AvisoNovate.pretty git https://github.com/AvisoNovate/pretty.git

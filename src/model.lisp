@@ -84,6 +84,9 @@
 (ƒ build-github-stargazers-url
    ~"(https|git|http)://github.com(.*).git"~ → |"https://api.github.com/repos\\2"|)
 
+(ƒ build-github-stargazers-url-for-scraping
+   ~"(https|git|http)://github.com(.*).git"~ → |"https://github.com\\2"|)
+
 (defun char-vector-to-string (v)
   (format nil "~{~a~}" (mapcar #'code-char (coerce v 'list))))
 
@@ -125,15 +128,29 @@ cl-json."
       (format s "~a" content)))
   content)
 
+(defun scrape-html-for-stars (s)
+  (aref (nth-value 1 (cl-ppcre:scan-to-strings "([0-9]+) users starred this repo" s)) 0))
+
+(defun package-stars-remote-from-html (url)
+  "Try to just get it directly."
+  (let ((html (drakma:http-request url)))
+    (scrape-html-for-stars html)))
+
 (defun package-stars-remote (name)
-  "Get the stargazers from github"
+  "Get the stargazers from github.  Unfortunately, the API rate limits."
   (let ((source (package-source name)))
     (if source
-      (or (let ((stars-url (build-github-stargazers-url (cadr source))))
-            (when (and (equal "git" (car source))
-                       stars-url)
-              (jkey :stargazers--count (remote-json-request stars-url)))) 0)
-      0)))
+        (or (let ((stars-url ;; (build-github-stargazers-url (cadr source))
+                   (build-github-stargazers-url-for-scraping (cadr source))
+                    ))
+              (when (and (equal "git" (car source))
+                         stars-url)
+                (print stars-url)
+                (parse-integer (package-stars-remote-from-html stars-url))
+                ;; (jkey :stargazers--count (remote-json-request stars-url))
+                ))
+            0)
+        0)))
 
 (defun package-stars (name)
   "Pull out the package stars or get the remote endpoint"
@@ -185,10 +202,23 @@ cl-json."
 (defun :name (m) (getf m :name))
 (defun :names () (mapcar :name (package-names)))
 
+(defun package-stars-with-catch (s)
+  "Just do nothing if the call fails."
+  (handler-case
+      (progn
+        (print s)
+        (package-stars s))
+    (error (e)
+      (print "package-stars-with-catch error:")
+      (print e)
+      nil)))
+
 (defun package-readme-with-catch (s)
   "Just do nothing if the call fails."
   (handler-case
-      (package-readme s)
+      (progn
+        (print s)
+        (package-readme s))
     (error (e)
       (print "package-readme-with-catch error:")
       (print e)
@@ -197,3 +227,7 @@ cl-json."
 (defun package-index-all ()
   "Just index all the things."
   (mapcar #'package-readme-with-catch (:names)))
+
+(defun package-index-all-stars ()
+  "Just index all the things."
+  (mapcar #'package-stars-with-catch (:names)))

@@ -1,9 +1,9 @@
 (in-package :cl-user)
-(defpackage sluglisp-test
+(defpackage slugclojure-test
   (:use :cl
-        :sluglisp
+        :slugclojure
         :prove))
-(in-package :sluglisp-test)
+(in-package :slugclojure-test)
 
 (plan nil)
 
