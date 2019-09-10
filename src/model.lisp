@@ -21,12 +21,10 @@
 (defparameter *loaded-projects-p* nil)
 
 (defun reset-cache ()
+  (defparameter *projects* (make-hash-table :test #'equal))
   (defparameter *project-readme* (make-hash-table :test #'equal))
-  (defparameter *project-stars* (make-hash-table :test #'equal)))
-
-(defun hw ()
-  "Hello world"
-  "haha")
+  (defparameter *project-stars* (make-hash-table :test #'equal))
+  (defparameter *loaded-projects-p* nil))
 
 (defun read-and-cache-projects ()
   "get the list of packages"
@@ -36,6 +34,11 @@
        until (eq 'eof line)
        do (let ((split (split-sequence #\Space line)))
             (setf (gethash (car split) *projects*) split)))))
+
+(defun read-and-cache-projects-with-reset ()
+  "Do a fresh install of the package things."
+  (reset-cache)
+  (read-and-cache-projects))
 
 (defun package-names ()
   "Pull out just the package names"
@@ -142,7 +145,6 @@ cl-json."
           (cache-save name "stars" (package-stars-remote name))))
   (gethash name *project-stars*))
 
-
 (defun package-readme-remote (name)
   "Get the readme data remotely"
   (let* ((source (package-source name))
@@ -178,3 +180,10 @@ cl-json."
   (remove-if-not
    (lambda (n) (search-match-p (getf n :name) term))
    (package-names)))
+
+(defun :name (m) (getf m :name))
+(defun :names () (mapcar :name (package-names)))
+
+(defun package-index-all ()
+  "Just index all the things."
+  (mapcar #'package-readme (:names)))

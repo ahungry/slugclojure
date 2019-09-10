@@ -1,8 +1,0 @@
-LevelDB bindings for Common Lisp.
-
-Prerequisites:
-  CFFI
-  Babel
-  Trivial-Garbage
-
-Patches welcome.

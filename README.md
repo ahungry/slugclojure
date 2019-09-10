@@ -40,7 +40,7 @@ git clone 'https://github.com/ahungry/slugclojure.git'
 
 ## Copyright
 
-Copyright (c) 2015 Matthew Carter (m@ahungry.com)
+Copyright (c) 2015-2019 Matthew Carter (m@ahungry.com)
 
 # License
 
