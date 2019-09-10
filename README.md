@@ -16,7 +16,7 @@ When the project is complete, plan to load via a simple:
 
 ```lisp
 (ql:quickload :slugclojure)
-(slugclojure:start :port 5000)
+(slugclojure:start :port 5000 :server 'woo)
 ```
 
 And then visit:

@@ -1,0 +1,91 @@
+#+TITLE: http.async.client - Asynchronous HTTP Client - Clojure
+#+SETUPFILE: org/setup.org
+
+*http.async.client* is the Asynchronous HTTP Client for Clojure.  It is promise-based and uses the
+[[http://github.com/AsyncHttpClient/async-http-client][Asynchronous Http Client for Java]] for the heavy lifting.
+
+* Versioning
+  This library uses [[http://www.semver.org][semantic versioning]].  An overview of changes by version is available
+  in the [[http://cch1.github.io/http.async.client/changelog][changelog]].
+
+* Distribution
+  All released artifacts are deployed to [[https://clojars.org/http.async.client][Clojars]].
+
+  [[http://clojars.org/http.async.client/latest-version.svg]]
+
+* Build status
+  [[https://travis-ci.org/cch1/http.async.client][TravisCI]] is used to track the build status of intermediate
+  commits on the following branches:
+| master      | [[https://secure.travis-ci.org/cch1/http.async.client.png?branch=master]]      |
+| development | [[https://secure.travis-ci.org/cch1/http.async.client.png?branch=development]] |
+
+* Examples
+  Declare dependency (using leiningen, in this example):
+#+BEGIN_SRC clojure -n
+  (defproject your-project "1.0.0-SNAPSHOT"
+    :description "Your project description"
+    :dependencies [[org.clojure/clojure "1.10.0"]
+                   [http.async.client "1.3.1"]])
+#+END_SRC
+
+** Asynchronous GET request
+
+#+BEGIN_SRC clojure -n
+  (ns async-get
+    (:require [http.async.client :as http]))
+
+  (with-open [client (http/create-client)]
+    (let [response (http/GET client "https://github.com/cch1/http.async.client/")]
+      (-> response
+          http/await
+          http/string)))
+#+END_SRC
+
+** WebSocket client
+
+#+BEGIN_SRC clojure -n
+(ns ws-client
+  (:require [http.async.client :as http]))
+
+(def url "ws://remote-websocket-url:1337")
+
+(defn on-open [ws]
+  (println "Connected to WebSocket."))
+
+(defn on-close [ws code reason]
+  (println "Connection to WebSocket closed.\n"
+           (format "[%s] %s" code reason)))
+
+(defn on-error [ws e]
+  (println "ERROR:" e))
+
+(defn handle-message [ws msg]
+  (prn "got message:" msg))
+
+(defn -main []
+  (println "Connecting...")
+  (with-open [client (http/create-client)]
+    (let [ws (http/websocket client
+                             url
+                             :open  on-open
+                             :close on-close
+                             :error on-error
+                             :text handle-message)]
+      ; this loop-recur is here as a placeholder to keep the process
+      ; from ending, so that the message-handling function will continue to
+      ; print messages to STDOUT until Ctrl-C is pressed
+      (loop [] (recur)))))
+
+#+END_SRC
+
+* More info
+
+  It runs with Clojure 1.5.1, 1.6.0, 1.7.0, 1.8.0, 1.9.0 and 1.10.0.  Development is against Clojure 1.9.0.
+
+  For complete documentation refer to the [[http://cch1.github.io/http.async.client/][project documentation index]].
+
+  *http.async.client* is distributed under [[http://www.apache.org/licenses/LICENSE-2.0.html][Apache License, Version 2.0]].
+
+  If you would like to report an problem or submit a request, [[http://github.com/cch1/http.async.client/issues/][create an issue]].
+
+  Finally, much thanks is owed to those [[https://github.com/cch1/http.async.client/graphs/contributors][contributors]] who have made this project so successful.

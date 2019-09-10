@@ -8,6 +8,7 @@
    :build-github-href
    :package-source
    :package-readme
+   :package-readme-with-catch
    :package-stars
    :package-search
    :package-names))
@@ -184,6 +185,15 @@ cl-json."
 (defun :name (m) (getf m :name))
 (defun :names () (mapcar :name (package-names)))
 
+(defun package-readme-with-catch (s)
+  "Just do nothing if the call fails."
+  (handler-case
+      (package-readme s)
+    (error (e)
+      (print "package-readme-with-catch error:")
+      (print e)
+      nil)))
+
 (defun package-index-all ()
   "Just index all the things."
-  (mapcar #'package-readme (:names)))
+  (mapcar #'package-readme-with-catch (:names)))

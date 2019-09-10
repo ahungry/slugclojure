@@ -51,7 +51,7 @@
                                 :href (build-github-href (cadr package-source))
                                 :remote (cadr package-source)
                                 :stars (package-stars (car splat))
-                                :readme (package-readme (car splat))
+                                :readme (package-readme-with-catch (car splat))
                                 )))
         (throw-code 404))))
 
